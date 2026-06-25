@@ -182,6 +182,19 @@ Los clientes están en `lib/supabase/`:
 3. Los route groups `(public)`, `(booking)`, `(auth)` y `(dashboard)` organizan layouts sin afectar la URL.
 4. El alias `@/*` apunta a la raíz del proyecto (configurado en `tsconfig.json`).
 
-## Licencia
 
-Proyecto privado.
+## Orquestación de Inteligencia Artificial y Velocidad
+
+Para el desarrollo de **CineGlow**, el uso de asistentes de Inteligencia Artificial fue un requisito estratégico integrado desde el primer minuto. Se utilizó **Cursor** como entorno de desarrollo potenciado con **Claude 3.5 Sonnet** para maximizar la velocidad de entrega, actuando bajo un rol de **Arquitecto/Auditor**.
+
+### Estrategia de Copiloto y Prompts Clave
+
+La IA no se utilizó para generar código a ciegas mediante copy-paste, sino como un acelerador de boilerplate, maquetado de UI y tipado estructural. 
+
+El desarrollo se inició orquestando la estructura base mediante el siguiente prompt inicial:
+
+> *"Actuá como un Arquitecto de Software experto en Next.js, TypeScript y Tailwind CSS. Necesito estructurar un sistema de reserva de cine llamado 'CineGlow'. Generame la estructura de carpetas ideal bajo la 'App Router' de Next.js que separe claramente los componentes de la UI, las páginas, la conexión con Supabase y una carpeta 'patterns' donde pueda implementar los patrones Factory, Strategy y Decorator de forma desacoplada para la lógica de tickets y candy bar"*
+
+### Criterio Técnico
+
+La mayor ventaja de la IA radicó en acelerar tareas de alta fidelidad visual (como la grilla interactiva de selección de asientos con Tailwind CSS) y la generación automática de contratos de TypeScript a partir del esquema de la base de datos de Supabase. 
