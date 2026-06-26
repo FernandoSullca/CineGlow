@@ -7,10 +7,10 @@ export default function PublicLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="min-h-screen bg-slate-950 text-slate-100">
       <SiteHeader />
       {children}
       <SiteFooter />
-    </>
+    </div>
   );
 }
