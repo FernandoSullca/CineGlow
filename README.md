@@ -198,3 +198,107 @@ El desarrollo se inició orquestando la estructura base mediante el siguiente pr
 ### Criterio Técnico
 
 La mayor ventaja de la IA radicó en acelerar tareas de alta fidelidad visual (como la grilla interactiva de selección de asientos con Tailwind CSS) y la generación automática de contratos de TypeScript a partir del esquema de la base de datos de Supabase. 
+
+### Resoluciones
+
+#### Error: `"next" no se reconoce como un comando interno o externo`
+
+Este error aparece cuando **`npm install` no terminó correctamente** o nunca se ejecutó. Sin `node_modules`, el script `next dev` no encuentra el ejecutable de Next.js.
+
+<details>
+<summary><strong>Ver error original en consola</strong></summary>
+
+```text
+C:\Users\willian\Documents\CineGlow> npm run dev
+
+> cineglow@0.1.0 dev
+> next dev
+
+"next" no se reconoce como un comando interno o externo,
+programa o archivo por lotes ejecutable.
+```
+
+</details>
+
+---
+
+#### Paso a paso para solucionarlo
+
+> **Plataforma:** Windows · **Terminal:** CMD o PowerShell  
+> Ejecutá los comandos desde la carpeta raíz del proyecto (`CineGlow`).
+
+**1. Limpiar cualquier rastro corrupto**
+
+A veces la instalación se corta a la mitad. Borrá `node_modules` y `package-lock.json` si existen:
+
+```cmd
+rmdir /s /q node_modules
+del package-lock.json
+```
+
+En **PowerShell** (alternativa):
+
+```powershell
+Remove-Item -Recurse -Force node_modules -ErrorAction SilentlyContinue
+Remove-Item -Force package-lock.json -ErrorAction SilentlyContinue
+```
+
+**2. Forzar una instalación limpia**
+
+Volvé a instalar todas las dependencias desde cero:
+
+```bash
+npm install
+```
+
+Verificá en consola que termine **sin errores críticos** y muestre un mensaje similar a:
+
+```text
+added 142 packages, and audited 143 packages in 12s
+```
+
+**3. Confirmar que `node_modules` existe**
+
+```cmd
+dir
+```
+
+Deberías ver la carpeta `node_modules` en el listado. También podés comprobar que Next.js quedó instalado:
+
+```cmd
+dir node_modules\.bin\next*
+```
+
+**4. Levantar el servidor de desarrollo**
+
+```bash
+npm run dev
+```
+
+Si todo salió bien, verás algo como:
+
+```text
+▲ Next.js 15.x.x
+- Local:   http://localhost:3000
+✓ Ready in 2.7s
+```
+
+Abrí [http://localhost:3000](http://localhost:3000) en el navegador.
+
+---
+
+#### Checklist rápido
+
+| Paso | Comando | ¿OK? |
+|------|---------|------|
+| Limpiar instalación previa | `rmdir /s /q node_modules` + `del package-lock.json` | ☐ |
+| Reinstalar dependencias | `npm install` | ☐ |
+| Verificar carpeta | `dir node_modules` | ☐ |
+| Iniciar servidor | `npm run dev` | ☐ |
+
+#### Si el error persiste
+
+- Confirmá que tenés **Node.js 18+** instalado: `node -v`
+- Confirmá que tenés **npm** disponible: `npm -v`
+- Cerrá y volvé a abrir la terminal después de instalar Node.js
+- Probá borrar la caché de npm: `npm cache clean --force` y repetí desde el paso 1
