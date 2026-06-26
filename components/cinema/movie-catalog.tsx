@@ -15,6 +15,7 @@ export function MovieCatalog({ movies }: MovieCatalogProps) {
   const filteredMovies = useMemo(() => {
     if (selectedGenre === 'Todos') return movies;
     return movies.filter((movie) => movie.genre === selectedGenre);
+    
   }, [movies, selectedGenre]);
 
   return (
@@ -40,9 +41,9 @@ export function MovieCatalog({ movies }: MovieCatalogProps) {
               <MovieCard
                 title={movie.title}
                 slug={movie.slug}
-                posterUrl={movie.posterUrl}
+                posterUrl={movie.poster_url}
                 genre={movie.genre}
-                durationMinutes={movie.durationMinutes}
+                durationMinutes={movie.duration_minutes}
                 rating={Number((movie.rating ?? 5.0).toFixed(1))}
               />
             </li>

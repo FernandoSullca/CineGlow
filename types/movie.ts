@@ -7,8 +7,8 @@ export interface Movie {
   title: string;
   slug: string;
   genre: MovieGenre;
-  posterUrl: string;
-  durationMinutes: number;
+  poster_url: string;
+  duration_minutes: number;
   rating: number;
   synopsis: string;
 }
