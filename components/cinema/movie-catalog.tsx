@@ -43,7 +43,7 @@ export function MovieCatalog({ movies }: MovieCatalogProps) {
                 posterUrl={movie.posterUrl}
                 genre={movie.genre}
                 durationMinutes={movie.durationMinutes}
-                rating={movie.rating}
+                rating={Number((movie.rating ?? 5.0).toFixed(1))}
               />
             </li>
           ))}
