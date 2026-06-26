@@ -1,7 +1,8 @@
 import { MovieCatalog } from '@/components/cinema/movie-catalog';
 import { MOCK_MOVIES } from '@/lib/data/mock-movies';
+import { getMovies } from '@/lib/supabase/queries/movies';
 
-async function getMovies() {
+async function getMoviesMock() {
   // Simula latencia de red — reemplazar por:
   // return getMoviesFromSupabase();
   await new Promise((resolve) => setTimeout(resolve, 0));

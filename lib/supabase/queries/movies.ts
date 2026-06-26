@@ -2,7 +2,11 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function getMovies() {
   const supabase = await createClient();
-  const { data, error } = await supabase.from('movies').select('*');
+  // Hacemos el select real apuntando a la tabla 'movies' de Postgres
+  const { data, error } = await supabase.from('movies')
+  .select('*')
+  .order('title', { ascending: true });
+  
   if (error) throw error;
   return data;
 }
