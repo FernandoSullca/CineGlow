@@ -52,4 +52,4 @@ no en la página del candy bar.
 
 ## Flujo del Candy Bar
 
-![Flujo CandyBar](docs\candybar_flow.svg)
+![Flujo CandyBar](docs/candybar_flow.svg)
