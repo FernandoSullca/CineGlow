@@ -65,3 +65,31 @@ SELECT id, NOW() + INTERVAL '3 hours', 'Sala Estelar 1', 'IMAX' FROM movies WHER
 
 INSERT INTO showtimes (movie_id, starts_at, room, format)
 SELECT id, NOW() + INTERVAL '5 hours', 'Sala Glow 3', '2D' FROM movies WHERE slug = 'sombra-de-acero';
+
+-- 9. Crear tabla: candy_products
+CREATE TABLE candy_products (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    description TEXT,
+    price_cents INTEGER NOT NULL,
+    image_url TEXT,
+    category TEXT NOT NULL, -- 'Combos', 'Bebidas', 'Snacks', 'Dulces'
+    stock INTEGER NOT NULL DEFAULT 100,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- 10. Desactivar RLS para candy_products
+ALTER TABLE candy_products DISABLE ROW LEVEL SECURITY;
+
+-- 11. Insertar productos de ejemplo para el Candy Bar
+INSERT INTO candy_products (name, description, price_cents, image_url, category) VALUES
+('Combo Pareja', '2 Refrescos grandes y 1 Palomitas grandes', 1500, 'https://images.unsplash.com/photo-1620189507195-68309c04c4d5?w=600&h=400&fit=crop', 'Combos'),
+('Palomitas Grandes', 'Palomitas de maíz recién hechas, sabor mantequilla.', 650, 'https://images.unsplash.com/photo-1575429328392-c4a453982c77?w=600&h=400&fit=crop', 'Snacks'),
+('Refresco Grande', 'Refresco de tu elección, tamaño grande.', 400, 'https://images.unsplash.com/photo-1600783441235-6037a4c73335?w=600&h=400&fit=crop', 'Bebidas'),
+('Nachos con Queso', 'Nachos crujientes bañados en queso caliente.', 550, 'https://images.unsplash.com/photo-1598813273444-4361b369622a?w=600&h=400&fit=crop', 'Snacks'),
+('Hot Dog Clásico', 'Salchicha premium en pan suave con tus aderezos favoritos.', 500, 'https://images.unsplash.com/photo-1619019363148-1b03b30619a0?w=600&h=400&fit=crop', 'Snacks'),
+('M&Ms de Chocolate', 'Bolsa de chocolates M&Ms, perfecta para el cine.', 350, 'https://images.unsplash.com/photo-1610487132924-1a7375a34208?w=600&h=400&fit=crop', 'Dulces');
+
+-- 12. Limpieza adicional para candy_products
+DROP TYPE IF EXISTS candy_category;
+ALTER TABLE reservations ADD COLUMN IF NOT EXISTS candy_items JSONB;
