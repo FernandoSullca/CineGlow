@@ -36,3 +36,20 @@ Los **patterns** reciben interfaces puras (`TicketContext`, `PricingContext`) de
 ### Decorator — extras acumulables sobre un precio/base
 - **Ticket**: base → +VIP → +3D → +combo candy.
 - **Candy**: base → +tamaño grande → +extra mantequilla.
+
+
+## Separación candy bar: UI vs patterns
+
+| Capa | Tipos usados | Fuente de datos |
+|------|-------------|-----------------|
+| UI (`components/candy-bar/`) | `CandyProductRow`, `DbCandyCategory` | Supabase real |
+| Patrones (`patterns/factory/`, `patterns/decorator/`) | `CandyItem`, `CandyCategory` | Catálogo interno |
+
+Los componentes de UI trabajan directo con `CandyProductRow`. 
+Los decorators (`LargeSizeDecorator`, `ExtraButterDecorator`, etc.) 
+se aplican en el servicio de checkout al confirmar la reserva, 
+no en la página del candy bar.
+
+## Flujo del Candy Bar
+
+![Flujo CandyBar](docs/candybar-flow.svg)
