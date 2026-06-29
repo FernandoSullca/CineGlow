@@ -1,27 +1,29 @@
 'use client';
- 
+
 import { CandyProductRow } from '@/types/candy-bar';
- 
+import { useState } from 'react';
+
 interface ProductCardProps {
   product: CandyProductRow;
   quantity: number;
   onAdd: () => void;
   onRemove: () => void;
 }
- 
+
 export default function ProductCard({ product, quantity, onAdd, onRemove }: ProductCardProps) {
   const price = (product.price_cents / 100).toFixed(2);
- 
+  const [imgError, setImgError] = useState(false);
   return (
     <div className="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 hover:border-yellow-500/40 transition-colors group flex flex-col">
       {/* Imagen */}
       <div className="relative h-44 overflow-hidden bg-gray-800">
-        {product.image_url ? (
+        {product.image_url && !imgError ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={product.image_url}
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            onError={() => setImgError(true)}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-4xl">🍿</div>
@@ -31,7 +33,7 @@ export default function ProductCard({ product, quantity, onAdd, onRemove }: Prod
           {product.category}
         </span>
       </div>
- 
+
       {/* Info */}
       <div className="p-4 flex flex-col flex-1">
         <h3 className="font-semibold text-white text-sm mb-1 leading-tight">{product.name}</h3>
@@ -40,10 +42,10 @@ export default function ProductCard({ product, quantity, onAdd, onRemove }: Prod
             {product.description}
           </p>
         )}
- 
+
         <div className="flex items-center justify-between mt-auto">
           <span className="text-yellow-400 font-bold text-base">${price}</span>
- 
+
           {quantity === 0 ? (
             <button
               onClick={onAdd}
@@ -73,4 +75,3 @@ export default function ProductCard({ product, quantity, onAdd, onRemove }: Prod
     </div>
   );
 }
- 

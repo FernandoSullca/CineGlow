@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/lib/utils/cn';
 import type { MovieGenre } from '@/types/movie';
+import { useState } from 'react';
+import MovieHero from './movie-hero';
 
 export interface MovieCardProps {
   title: string;
@@ -19,6 +21,8 @@ const GENRE_STYLES: Record<MovieGenre, string> = {
   Drama: 'text-violet-300 bg-violet-500/10 border-violet-500/20',
 };
 
+
+
 export function MovieCard({
   title,
   slug,
@@ -31,7 +35,7 @@ export function MovieCard({
   const hours = Math.floor(durationMinutes / 60);
   const minutes = durationMinutes % 60;
   const durationLabel = hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
-
+  const [imgError, setImgError] = useState(false);
   return (
     <Link
       href={`/peliculas/${slug}`}
@@ -45,13 +49,23 @@ export function MovieCard({
       )}
     >
       <div className="relative aspect-[2/3] overflow-hidden">
-        <Image
-          src={posterUrl}
-          alt={`Póster de ${title}`}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+
+
+        {!imgError ? (
+          <Image
+            src={posterUrl}
+            alt={`Póster de ${title}`}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-slate-500">
+            <span className="text-5xl">🎬</span>
+            <span className="text-xs">{title}</span>
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80" />
 
         <span className="absolute right-3 top-3 rounded-full border border-amber-400/30 bg-slate-950/80 px-2.5 py-1 text-xs font-semibold text-amber-300 backdrop-blur-sm">
