@@ -74,15 +74,13 @@ export default async function MoviePage({ params }: MoviePageProps) {
                 </div>
                 <span>.</span>
                 <span>{movie.rating}</span>
-                            
+
               </div>
               {/**Listado generos de pelicula*/}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {movie.genres?.map((genre: any) => (
-                  <span key={genre} className="px-3 py-1 text-sm font-medium rounded-full bg-secondary">
-                    {genre}
-                  </span>
-                ))}
+              <div className="mb-6">
+                <span className="px-3 py-1 text-sm font-medium rounded-full bg-secondary">
+                  {movie.genre}
+                </span>
               </div>
 
               <h2 className="text-2xl font-semibold mb-3 border-l-4 border-primary pl-3">Sinopsis</h2>
