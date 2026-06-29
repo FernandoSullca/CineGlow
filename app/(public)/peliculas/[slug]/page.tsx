@@ -2,6 +2,8 @@ import { getMoviesBySlug, getShowtimesByMovieId } from "@/lib/supabase/queries/m
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Clock } from "lucide-react";
+import MovieHero from "@/components/cinema/movie-hero";
+import MoviePoster from "@/components/cinema/movie-poster";
 
 interface MoviePageProps {
   params: Promise<{ slug: string }>;
@@ -35,16 +37,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
 
         {/**Hero con imagen de fondo */}
         <div className="relative h-[30vh] md:h-[40vh] w-full">
-          <Image
-            src={movie.poster_url}
-            alt={movie.title}
-            layout="fill"
-            objectFit="cover"
-            className="opacity-50"
-          />
-          {/**efecto gradiente trasparente superior del fondo */}
-          <div className="absolute inset-0 bg-gradient-to-t from-blackground via-transparent"></div>
-
+          <MovieHero src={movie.poster_url} title={movie.title} />
         </div>
 
 
@@ -54,14 +47,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
             {/**Poster de la pelicula incrustada */}
             <div className="md:col-span-1 lg:col-span-1">
 
-              <Image
-                src={movie.poster_url}
-                alt={"Poster de la película" + movie.title}
-                width={500}
-                height={750}
-                className="rounded-lg shadow-2x1 object-cover w-full"
-                priority
-              />
+              <MoviePoster src={movie.poster_url} title={movie.title} />
 
             </div>
             {/**Detalles */}
@@ -74,15 +60,13 @@ export default async function MoviePage({ params }: MoviePageProps) {
                 </div>
                 <span>.</span>
                 <span>{movie.rating}</span>
-                            
+
               </div>
               {/**Listado generos de pelicula*/}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {movie.genres?.map((genre: any) => (
-                  <span key={genre} className="px-3 py-1 text-sm font-medium rounded-full bg-secondary">
-                    {genre}
-                  </span>
-                ))}
+              <div className="mb-6">
+                <span className="px-3 py-1 text-sm font-medium rounded-full bg-secondary">
+                  {movie.genre}
+                </span>
               </div>
 
               <h2 className="text-2xl font-semibold mb-3 border-l-4 border-primary pl-3">Sinopsis</h2>
