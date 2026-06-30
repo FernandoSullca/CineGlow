@@ -302,3 +302,26 @@ Abrí [http://localhost:3000](http://localhost:3000) en el navegador.
 - Confirmá que tenés **npm** disponible: `npm -v`
 - Cerrá y volvé a abrir la terminal después de instalar Node.js
 - Probá borrar la caché de npm: `npm cache clean --force` y repetí desde el paso 1
+
+
+## Flujo de Trabajo con Supabase e Integración de IA
+
+La infraestructura de datos se diseñó siguiendo un enfoque híbrido, optimizando el tiempo de desarrollo mediante herramientas generativas pero manteniendo un control estricto sobre el esquema relacional y la seguridad de tipos.
+
+### 1. Inicialización y Conexión de la Plataforma
+La conexión con Supabase se configuró utilizando la guía oficial de integración para **Next.js App Router** basada en el paquete `@supabase/ssr` propuesta por la propia plataforma de Superbase. 
+
+Se implementó una separación limpia en la instanciación del cliente:
+- **Capa de Servidor (`lib/supabase/server.ts`):** Utiliza `createServerClient` junto con `next/headers` para leer y escribir cookies de sesión de forma segura del lado del servidor. Esto permite que los *Server Components* consuman datos de la base de datos directamente en el renderizado inicial, eliminando la necesidad de loaders en el cliente.
+- **Capa de Cliente (`lib/supabase/client.ts`):** Utiliza `createBrowserClient` para interacciones dinámicas en tiempo real dentro de los componentes del navegador (como el mapa de asientos interactivo).
+
+### 2. Estrategia de Base de Datos y Orquestación de IA (Code-First a PostgreSQL)
+Dado que Supabase no soporta un enfoque automático *Code-First* nativo desde contratos TypeScript, se utilizó la Inteligencia Artificial (GEMINIS integrado) como un traductor de arquitectura eficiente.
+
+El proceso consistió en los siguientes pasos controlados por el desarrollador:
+1. Se definieron formalmente las interfaces y contratos de datos en TypeScript dentro de la aplicación, modelando las entidades `movies`, `showtimes` y `reservations`.
+2. Se orquestó a la IA pasándole este tipado estricto como contexto con la instrucción explícita de traducirlo a comandos puros de **PostgreSQL**, respetando relaciones de claves foráneas (`REFERENCES`), tipos compuestos (`ENUM`) y arreglos nativos (`TEXT[]` para los asientos reservados).
+3. El script SQL generado por la IA fue auditado manualmente para garantizar la integridad referencial y se ejecutó en el *SQL Editor* de Supabase.
+
+### 3. Versionado de la Base de Datos
+Para garantizar la reproducibilidad del proyecto por parte de los evaluadores, el script completo de inicialización del esquema junto con los inserts de prueba (*seed data*) se encuentran versionados en la carpeta: "database"
