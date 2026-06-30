@@ -10,9 +10,9 @@ export const MOCK_MOVIES: Movie[] = [
     title: 'Neon Horizon',
     slug: 'neon-horizon',
     genre: 'Ciencia Ficción',
-    posterUrl:
+    poster_url:
       'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&h=900&fit=crop',
-    durationMinutes: 142,
+    duration_minutes: 142,
     rating: 8.4,
     synopsis: 'En un futuro distópico, un piloto descubre una señal que podría salvar a la humanidad.',
   },
@@ -21,9 +21,9 @@ export const MOCK_MOVIES: Movie[] = [
     title: 'Sombra de Acero',
     slug: 'sombra-de-acero',
     genre: 'Acción',
-    posterUrl:
+    poster_url:
       'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&h=900&fit=crop',
-    durationMinutes: 118,
+    duration_minutes: 118,
     rating: 7.9,
     synopsis: 'Un ex agente vuelve a la acción cuando su familia queda en la mira de una organización criminal.',
   },
@@ -32,9 +32,9 @@ export const MOCK_MOVIES: Movie[] = [
     title: 'El Último Verano',
     slug: 'el-ultimo-verano',
     genre: 'Drama',
-    posterUrl:
+    poster_url:
       'https://images.unsplash.com/photo-1478720568477-152d9b334e59?w=600&h=900&fit=crop',
-    durationMinutes: 126,
+    duration_minutes: 126,
     rating: 8.1,
     synopsis: 'Tres hermanos se reencuentran en la casa de la infancia durante un verano inolvidable.',
   },
@@ -43,9 +43,9 @@ export const MOCK_MOVIES: Movie[] = [
     title: 'Quantum Drift',
     slug: 'quantum-drift',
     genre: 'Ciencia Ficción',
-    posterUrl:
+    poster_url:
       'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=600&h=900&fit=crop',
-    durationMinutes: 135,
+    duration_minutes: 135,
     rating: 8.7,
     synopsis: 'Una científica atraviesa dimensiones paralelas en busca de su desaparecida colega.',
   },
@@ -54,9 +54,9 @@ export const MOCK_MOVIES: Movie[] = [
     title: 'Código Rojo',
     slug: 'codigo-rojo',
     genre: 'Acción',
-    posterUrl:
+    poster_url:
       'https://images.unsplash.com/photo-1598899134739-24a46acbd1f5?w=600&h=900&fit=crop',
-    durationMinutes: 109,
+    duration_minutes: 109,
     rating: 7.5,
     synopsis: 'Operación de rescate en las alturas de un rascacielos tomado por mercenarios.',
   },
@@ -65,9 +65,9 @@ export const MOCK_MOVIES: Movie[] = [
     title: 'Cartas al Océano',
     slug: 'cartas-al-oceano',
     genre: 'Drama',
-    posterUrl:
+    poster_url:
       'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=600&h=900&fit=crop',
-    durationMinutes: 112,
+    duration_minutes: 112,
     rating: 8.3,
     synopsis: 'Una cartógrafa encuentra mensajes en botellas que cambian el rumbo de su vida.',
   },
@@ -76,9 +76,9 @@ export const MOCK_MOVIES: Movie[] = [
     title: 'Velocidad Cero',
     slug: 'velocidad-cero',
     genre: 'Acción',
-    posterUrl:
+    poster_url:
       'https://images.unsplash.com/photo-1574267432644-85a5fc58a951?w=600&h=900&fit=crop',
-    durationMinutes: 124,
+    duration_minutes: 124,
     rating: 7.8,
     synopsis: 'Carrera callejera clandestina que se convierte en la persecución del siglo.',
   },
@@ -87,9 +87,9 @@ export const MOCK_MOVIES: Movie[] = [
     title: 'Ecos de Marte',
     slug: 'ecos-de-marte',
     genre: 'Ciencia Ficción',
-    posterUrl:
+    poster_url:
       'https://images.unsplash.com/photo-1614728894747-a83421e2b124?w=600&h=900&fit=crop',
-    durationMinutes: 148,
+    duration_minutes: 148,
     rating: 8.6,
     synopsis: 'La primera colonia marciana enfrenta un misterio enterrado bajo el polvo rojo.',
   },
@@ -98,9 +98,9 @@ export const MOCK_MOVIES: Movie[] = [
     title: 'La Casa del Silencio',
     slug: 'la-casa-del-silencio',
     genre: 'Drama',
-    posterUrl:
+    poster_url:
       'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&h=900&fit=crop',
-    durationMinutes: 119,
+    duration_minutes: 119,
     rating: 8.0,
     synopsis: 'Una directora de cine documenta los últimos días de un teatro centenario.',
   },
