@@ -4,13 +4,13 @@ import Image from 'next/image';
 import { getReservationById } from '@/lib/supabase/queries/reservations';
 
 interface ConfirmationPageProps {
-  searchParams: {
+  searchParams: Promise<{
     reservationId?: string;
-  };
+  }>;
 }
 
 export default async function ConfirmationPage({ searchParams }: ConfirmationPageProps) {
-  const { reservationId } = searchParams;
+  const { reservationId } = await searchParams;
   const reservation = reservationId ? await getReservationById(reservationId) : null;
 
   return (

@@ -5,16 +5,15 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 
 interface CheckoutPageProps {
-  searchParams: {
+  searchParams: Promise<{
     showtimeId?: string;
     candy_items?: string;
     seats?: string;
-  };
+  }>;
 }
 
 export default async function CheckoutPage({ searchParams }: CheckoutPageProps) {
-  // In Next.js 15, searchParams is a promise that needs to be awaited
-  const { showtimeId, candy_items, seats } = searchParams;
+  const { showtimeId, candy_items, seats } = await searchParams;
   const MOCK_TICKET_PRICE_CENTS = 1200;
 
   if (!showtimeId && !candy_items) {
