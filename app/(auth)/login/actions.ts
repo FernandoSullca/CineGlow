@@ -21,6 +21,13 @@ export async function login(formData: FormData) {
     return redirect('/');
 }
 
+export async function logout() {
+    const supabase = await createClient();
+    await supabase.auth.signOut();
+    return redirect('/login');
+}
+
+
 export async function signup(formData: FormData) {
     const origin = (await headers()).get('origin');
     const email = formData.get('email') as string;
