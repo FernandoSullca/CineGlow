@@ -25,7 +25,7 @@ export default async function MisReservasPage() {
   const reservations = await getReservationsByUserId(user.id);
 
   return (
-    <main className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold text-white tracking-tight mb-8">Mis Reservas</h1>
 
       {reservations.length === 0 ? (
@@ -37,7 +37,7 @@ export default async function MisReservasPage() {
       ) : (
         <div className="space-y-6">
           {reservations.map((reservation) => (
-            <div key={reservation.id} className="flex flex-col md:flex-row gap-6 rounded-xl border border-slate-800 bg-slate-900 p-6">
+            <div key={reservation.id} className="flex flex-col md:flex-row gap-6 rounded-xl border border-slate-800 bg-slate-900 p-6 transition-all duration-300 hover:border-purple-400/50 hover:bg-slate-800/50">
               {reservation.showtimes?.movies?.poster_url && (
                 <Image
                   src={reservation.showtimes.movies.poster_url}
@@ -72,6 +72,6 @@ export default async function MisReservasPage() {
           ))}
         </div>
       )}
-    </main>
+    </div>
   );
 }

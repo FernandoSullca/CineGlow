@@ -18,13 +18,9 @@
 
 ## Prioridad MEDIA (Recomendado para Evaluación)
 
-1.  **Implementar Página "Mis Reservas"**
-    -   **Qué hacer**: Crear la página `/mis-reservas` que consulte y muestre el historial de reservas del usuario autenticado.
-    -   **Archivos a tocar**: `app/(dashboard)/mis-reservas/page.tsx`, `lib/supabase/queries/reservations.ts` (nueva query).
-    -   **Uso de Patterns**: No aplica.
-
 ## ✅ Completado
 
 -   **Implementar Flujo de Autenticación de Usuario**: Se crearon las páginas de login/registro, el `middleware` de protección de rutas y el `Header` dinámico.
 -   **Crear Página de Confirmación de Reserva**: La página `/confirmacion` está implementada y se usa al final del flujo de checkout.
 -   **Corregir Bug de Géneros en Detalle de Película**: La página de detalle ahora muestra el género correctamente.
+-   **Implementar Página "Mis Reservas"**: La página `/mis-reservas` muestra el historial de compras del usuario autenticado.
