@@ -6,8 +6,9 @@ import Image from 'next/image';
 export default async function RegisterPage({
   searchParams,
 }: {
-  searchParams: { message?: string | undefined };
+  searchParams: Promise<{ message?: string | undefined }>;
 }) {
+  const params = await searchParams;
   return (
     <main className="relative flex min-h-[calc(100vh-80px)] items-center justify-center p-4">
       <Image
@@ -53,7 +54,7 @@ export default async function RegisterPage({
             />
           </div>
 
-          {searchParams?.message && <p className="text-sm text-green-600 bg-green-500/10 border border-green-500/30 rounded-md p-2">{searchParams.message}</p>}
+          {params?.message && <p className="text-sm text-green-600 bg-green-500/10 border border-green-500/30 rounded-md p-2">{params.message}</p>}
 
           <button formAction={signup} className="w-full h-11 inline-flex items-center justify-center rounded-md bg-primary text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">Registrarse</button>
         </form>

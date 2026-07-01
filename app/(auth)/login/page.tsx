@@ -6,8 +6,9 @@ import Image from 'next/image';
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: { message?: string | undefined };
+  searchParams: Promise<{ message?: string | undefined }>;
 }) {
+  const params = await searchParams;
   return (
     <main className="relative flex min-h-[calc(100vh-80px)] items-center justify-center p-4">
       <Image
@@ -52,7 +53,7 @@ export default async function LoginPage({
             />
           </div>
 
-          {searchParams?.message && <p className="text-sm text-red-500 bg-red-500/10 border border-red-500/30 rounded-md p-2">{searchParams.message}</p>}
+          {params?.message && <p className="text-sm text-red-500 bg-red-500/10 border border-red-500/30 rounded-md p-2">{params.message}</p>}
 
           <div className="mt-2 w-full rounded-md border border-input bg-background/50 p-3 text-center text-xs text-muted-foreground">
             <p className="font-bold mb-1">Usuario de Demostración</p>
