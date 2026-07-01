@@ -3,10 +3,10 @@ import { login } from './actions';
 import { Film } from 'lucide-react';
 import Image from 'next/image';
 
-export default function LoginPage({
+export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: { message?: string };
+  searchParams: { message?: string | undefined };
 }) {
   return (
     <main className="relative flex min-h-[calc(100vh-80px)] items-center justify-center p-4">
@@ -52,7 +52,7 @@ export default function LoginPage({
             />
           </div>
 
-          {searchParams.message && <p className="text-sm text-red-500 bg-red-500/10 border border-red-500/30 rounded-md p-2">{searchParams.message}</p>}
+          {searchParams?.message && <p className="text-sm text-red-500 bg-red-500/10 border border-red-500/30 rounded-md p-2">{searchParams.message}</p>}
 
           <div className="mt-2 w-full rounded-md border border-input bg-background/50 p-3 text-center text-xs text-muted-foreground">
             <p className="font-bold mb-1">Usuario de Demostración</p>
