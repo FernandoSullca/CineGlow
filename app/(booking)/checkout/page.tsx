@@ -8,12 +8,13 @@ interface CheckoutPageProps {
   searchParams: {
     showtimeId?: string;
     candy_items?: string;
+    seats?: string;
   };
 }
 
 export default async function CheckoutPage({ searchParams }: CheckoutPageProps) {
   // In Next.js 15, searchParams is a promise that needs to be awaited
-  const { showtimeId, candy_items } = searchParams; // Revert to sync for simplicity as per user flow change
+  const { showtimeId, candy_items, seats } = searchParams;
   const MOCK_TICKET_PRICE_CENTS = 1200;
 
   if (!showtimeId && !candy_items) {
@@ -33,8 +34,9 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
   const candyProducts = candyIds.length > 0 ? await getCandyProductsByIds(candyIds) : [];
 
   // --- Cálculo de precios ---
-  const mockSeats = showtime ? ['F5', 'F6'] : []; // Usamos los mismos asientos mockeados que en la action
-  const ticketTotal = mockSeats.length * MOCK_TICKET_PRICE_CENTS;
+  // Leemos los asientos desde la URL. Si no hay, usamos los mockeados como en la action.
+  const selectedSeats = seats ? seats.split(',') : ['F5', 'F6'];
+  const ticketTotal = selectedSeats.length * MOCK_TICKET_PRICE_CENTS;
   const totalCandyPrice = parsedCandyItems.reduce((total, item) => {
     const product = candyProducts.find(p => p.id === item.id);
     return total + (product ? product.price_cents * item.q : 0);
@@ -59,9 +61,9 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
               <h2 className="text-lg font-semibold text-white border-b border-slate-700 pb-2 mb-3">Entradas</h2>
               <div className="text-sm text-slate-300 space-y-1">
                 <p><span className="font-semibold">Película:</span> {showtime.movies.title}</p>
-                <p><span className="font-semibold">Asientos (mock):</span> {mockSeats.join(', ')}</p>
+                <p><span className="font-semibold">Asientos:</span> {selectedSeats.join(', ')}</p>
                 <p className="flex justify-between items-center">
-                  <span>{mockSeats.length} x Entrada General</span>
+                  <span>{selectedSeats.length} x Entrada General</span>
                   <span className="font-mono font-semibold text-white">${(ticketTotal / 100).toFixed(2)}</span>
                 </p>
               </div>
@@ -96,6 +98,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
         <form action={processReservationAction} className="mt-8">
           <input type="hidden" name="showtimeId" value={showtimeId} />
           <input type="hidden" name="candyItems" value={JSON.stringify(parsedCandyItems)} />
+          <input type="hidden" name="seats" value={seats} />
           <button className="w-full h-12 inline-flex items-center justify-center rounded-lg bg-amber-500 text-slate-950 text-base font-bold transition-transform hover:scale-105">
             Confirmar y Pagar
           </button>

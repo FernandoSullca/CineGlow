@@ -30,9 +30,9 @@ export async function processReservationAction(formData: FormData) {
     const candyProductIds = parsedCandyItems.map(item => item.id);
     const candyProducts = await getCandyProductsByIds(candyProductIds);
 
-    // En un flujo real, los asientos vendrían del estado de la página de reserva
-    // Si no hay showtime, los asientos son un array vacío.
-    const selectedSeats = showtimeId ? ['F5', 'F6'] : []; // Asientos mockeados
+    // Leemos los asientos seleccionados. Si no se seleccionó ninguno, usamos los mockeados como fallback.
+    const seatsRaw = formData.get('seats') as string;
+    const selectedSeats = seatsRaw ? seatsRaw.split(',') : ['F5', 'F6']; // Fallback a asientos mockeados
 
     const reservation = await processCheckout({
         userId: user.id,

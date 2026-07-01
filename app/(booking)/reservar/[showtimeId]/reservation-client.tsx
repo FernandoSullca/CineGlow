@@ -1,6 +1,7 @@
 'use client';
 
-import { SeatMapPlaceholder } from '@/components/booking/seat-map';
+import SeatMap from '@/components/booking/seat-map';
+import { cn } from '@/lib/utils/cn';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -14,7 +15,18 @@ type Showtime = {
 };
 
 export default function ReservationClient({ showtime }: { showtime: Showtime }) {
+    const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
     const [candyCartQuery, setCandyCartQuery] = useState('');
+
+    const handleSeatSelect = (seatId: string) => {
+        setSelectedSeats(prev => {
+            if (prev.includes(seatId)) {
+                return prev.filter(s => s !== seatId); // Deseleccionar
+            } else {
+                return [...prev, seatId]; // Seleccionar
+            }
+        });
+    };
 
     useEffect(() => {
         // Leemos el carrito del localStorage solo en el cliente
@@ -54,14 +66,22 @@ export default function ReservationClient({ showtime }: { showtime: Showtime }) 
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2">
-                        <SeatMapPlaceholder />
+                        <SeatMap selectedSeats={selectedSeats} onSeatSelect={handleSeatSelect} />
                     </div>
                     <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6 h-fit backdrop-blur-sm shadow-lg">
                         <h2 className="text-xl font-semibold text-white mb-4">Resumen de tu orden</h2>
-                        <p className="text-slate-400 mb-6 text-sm">La selección de asientos y el cálculo de precios se implementarán aquí.</p>
+                        <div className="text-slate-400 mb-6 text-sm space-y-2">
+                            <p>Has seleccionado {selectedSeats.length} asiento(s):</p>
+                            <p className="font-bold text-white">{selectedSeats.join(', ')}</p>
+                        </div>
                         <Link
-                            href={`/checkout?showtimeId=${showtime.id}${candyCartQuery}`}
-                            className="w-full h-12 inline-flex items-center justify-center rounded-lg bg-amber-500 text-slate-950 text-base font-bold transition-transform hover:scale-105"
+                            // Pasamos los asientos seleccionados al checkout
+                            href={selectedSeats.length > 0 ? `/checkout?showtimeId=${showtime.id}${candyCartQuery}&seats=${selectedSeats.join(',')}` : '#'}
+                            aria-disabled={selectedSeats.length === 0}
+                            className={cn(
+                                "w-full h-12 inline-flex items-center justify-center rounded-lg text-base font-bold transition-all",
+                                selectedSeats.length > 0 ? "bg-amber-500 text-slate-950 hover:scale-105" : "bg-slate-700 text-slate-500 cursor-not-allowed"
+                            )}
                         >
                             Ir a Pagar
                         </Link>
