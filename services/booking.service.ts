@@ -1,9 +1,8 @@
 import { buildTicket } from '@/services/ticket.service';
-import { buildCandyItem } from '@/services/candy-bar.service';
 import { resolveSeatSelectionStrategy } from '@/patterns/strategy';
 import { createReservation } from '@/lib/supabase/queries/reservations';
 import type { TicketCreateInput } from '@/types/ticket';
-import type { CandyCreateInput } from '@/types/candy-bar';
+import type { CandyOrderItem } from '@/types/candy-bar';
 
 export interface CheckoutPayload {
   userId: string;
@@ -13,7 +12,7 @@ export interface CheckoutPayload {
   seats: string[];
   occupiedSeats: string[];
   tickets: Array<TicketCreateInput & { isStudent?: boolean; promoCode?: string }>;
-  candyItems: CandyCreateInput[];
+  candyItems: CandyOrderItem[];
 }
 
 export async function processCheckout(payload: CheckoutPayload) {
@@ -34,10 +33,10 @@ export async function processCheckout(payload: CheckoutPayload) {
     return sum + finalPriceCents;
   }, 0);
 
-  const candyTotal = payload.candyItems.reduce((sum, input) => {
-    const item = buildCandyItem({ input });
-    return sum + item.getPriceCents();
-  }, 0);
+  const candyTotal = payload.candyItems.reduce(
+    (sum, item) => sum + item.unit_price_cents * item.quantity,
+    0,
+  );
 
   const totalCents = ticketTotal + candyTotal;
 
@@ -46,5 +45,6 @@ export async function processCheckout(payload: CheckoutPayload) {
     showtimeId: payload.showtimeId,
     seats: payload.seats,
     totalCents,
+    candyItems: payload.candyItems,
   });
 }

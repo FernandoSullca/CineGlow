@@ -53,3 +53,18 @@ no en la página del candy bar.
 ## Flujo del Candy Bar
 
 ![Flujo CandyBar](docs/candybar_flow.svg)
+
+
+## Flujo de Reserva + Candy Bar
+
+El flujo completo combina selección de snacks, elección de función,
+selección de asientos y confirmación de pago en un proceso de 3 pasos.
+
+El carrito del Candy Bar persiste via `localStorage` entre páginas,
+permitiendo al usuario armar su pedido antes o después de elegir la película.
+Los datos viajan al checkout via URL params y se confirman en Supabase
+mediante una Server Action (`processReservationAction`).
+
+## Flujo de reserva + Candy Bar
+
+![Flujo de reserva](docs/booking_flow_dark.png)

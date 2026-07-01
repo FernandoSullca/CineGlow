@@ -28,8 +28,7 @@
 
 ## 🧐 Deuda Técnica Documentada
 
--   **Patrones de Diseño (`patterns/`) No Integrados**:
-    -   **Descripción**: Se ha implementado una base sólida y reutilizable de lógica de negocio con los patrones Factory, Strategy y Decorator. Sin embargo, actualmente este código no es invocado por ninguna parte de la aplicación.
-    -   **Justificación**: Esta implementación se realizó "diseño-arriba" (`design-up-front`) para establecer una arquitectura robusta y testeable para la lógica de negocio más compleja (cálculo de precios, creación de tickets). Se priorizó la creación de esta base antes de conectarla con la UI.
-    -   **Plan de Acción**: Esta "deuda" se saldará al implementar el flujo de reserva y checkout (tarea de prioridad ALTA en `TODO.md`). El `booking.service` actuará como puente, orquestando la creación de entidades con las `Factories`, el cálculo de precios con las `Strategies` y la adición de extras con los `Decorators`, demostrando así el valor de esta arquitectura desacoplada.
-
+-   **Uso Parcial de Patrones de Diseño (`patterns/`)**:
+    -   **Descripción**: El `booking.service` ya utiliza el patrón `Strategy` a través de `buildTicket`, pero de forma limitada. El precio base de las entradas es fijo y no se aplican descuentos dinámicos (estudiante, promos). Además, los patrones `Factory` y `Decorator` para el Candy Bar no se están utilizando.
+    -   **Justificación**: Se priorizó la implementación de un flujo de checkout funcional de extremo a extremo, dejando el cálculo de precios dinámico como un paso de refinamiento posterior.
+    -   **Plan de Acción**: La deuda se saldará al refactorizar el `booking.service` y el `checkout action` para que utilicen plenamente las `Pricing Strategies` y los `Decorators`, permitiendo así la aplicación de descuentos y extras. Esto demostrará el valor completo de la arquitectura desacoplada.

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Clock } from "lucide-react";
 import MovieHero from "@/components/cinema/movie-hero";
 import MoviePoster from "@/components/cinema/movie-poster";
+import Link from "next/link";
 
 interface MoviePageProps {
   params: Promise<{ slug: string }>;
@@ -77,10 +78,12 @@ export default async function MoviePage({ params }: MoviePageProps) {
               {showtimes && showtimes.length > 0 ? (
                 <div className="flex flex-wrap gap-3">
                   {showtimes.map((showtime) => (
-                    <div className="flex flex-col items-center leading-tight" key={showtime.id}>
-                      <span className="text-lg font-bold" >{formatShowtime(showtime.starts_at)}</span>
-                      <span className="text-sx font-normal">{showtime.room}</span>
-                    </div>
+                    <Link href={`/reservar/${showtime.id}`} key={showtime.id} className="border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-lg p-3 text-center transition-colors">
+                      <div className="flex flex-col items-center leading-tight">
+                        <span className="text-lg font-bold" >{formatShowtime(showtime.starts_at)}</span>
+                        <span className="text-sx font-normal">{showtime.room}</span>
+                      </div>
+                    </Link>
                   ))}
                 </div>
               ) : (

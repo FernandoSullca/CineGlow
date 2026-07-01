@@ -1,21 +1,24 @@
 'use client';
- 
+
 import { useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { CandyProductRow, CartItem, DbCandyCategory } from '@/types/candy-bar';
 import ProductCard from './product-card';
 import CartDrawer from './card-drawer';
- 
+
+
 interface CandyBarClientProps {
   grouped: Record<DbCandyCategory, CandyProductRow[]>;
   categories: DbCandyCategory[];
   categoryEmoji: Record<DbCandyCategory, string>;
 }
- 
+
 export default function CandyBarClient({ grouped, categories, categoryEmoji }: CandyBarClientProps) {
   const [activeCategory, setActiveCategory] = useState<DbCandyCategory | 'Todos'>('Todos');
   const [cart, setCart] = useState<Map<string, CartItem>>(new Map());
   const [drawerOpen, setDrawerOpen] = useState(false);
- 
+  const router = useRouter();
+
   // ── Helpers carrito ──────────────────────────────────────────────────────
   const addToCart = useCallback((product: CandyProductRow) => {
     setCart((prev) => {
@@ -28,7 +31,7 @@ export default function CandyBarClient({ grouped, categories, categoryEmoji }: C
       return next;
     });
   }, []);
- 
+
   const removeFromCart = useCallback((productId: string) => {
     setCart((prev) => {
       const next = new Map(prev);
@@ -42,26 +45,36 @@ export default function CandyBarClient({ grouped, categories, categoryEmoji }: C
       return next;
     });
   }, []);
- 
+
   const clearCart = useCallback(() => setCart(new Map()), []);
- 
+
+  const handleCheckout = () => {
+    // Guardamos el carrito en localStorage y redirigimos al usuario a la cartelera
+    // para que elija una película y complete su orden.
+    try {
+      localStorage.setItem('candyCart', JSON.stringify(Array.from(cart.entries())));
+      router.push('/');
+    } catch (error) {
+      console.error("Error saving cart to localStorage:", error);
+    }
+  };
+
   const cartItems = Array.from(cart.values());
   const totalItems = cartItems.reduce((sum, i) => sum + i.quantity, 0);
- 
+
   // ── Productos a mostrar según filtro ────────────────────────────────────
   const visibleCategories = activeCategory === 'Todos' ? categories : [activeCategory];
- 
+
   return (
     <div className="max-w-6xl mx-auto px-4 pb-24">
       {/* Filtros de categoría */}
       <div className="flex gap-2 overflow-x-auto pb-2 mb-8 scrollbar-none">
         <button
           onClick={() => setActiveCategory('Todos')}
-          className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-            activeCategory === 'Todos'
-              ? 'bg-yellow-500 text-black'
-              : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-          }`}
+          className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'Todos'
+            ? 'bg-yellow-500 text-black'
+            : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+            }`}
         >
           Todos
         </button>
@@ -69,18 +82,17 @@ export default function CandyBarClient({ grouped, categories, categoryEmoji }: C
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              activeCategory === cat
-                ? 'bg-yellow-500 text-black'
-                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-            }`}
+            className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === cat
+              ? 'bg-yellow-500 text-black'
+              : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              }`}
           >
             <span>{categoryEmoji[cat]}</span>
             {cat}
           </button>
         ))}
       </div>
- 
+
       {/* Grilla de productos por sección */}
       <div className="space-y-10">
         {visibleCategories.map((cat) => {
@@ -107,7 +119,7 @@ export default function CandyBarClient({ grouped, categories, categoryEmoji }: C
           );
         })}
       </div>
- 
+
       {/* FAB carrito flotante */}
       {totalItems > 0 && (
         <button
@@ -121,7 +133,7 @@ export default function CandyBarClient({ grouped, categories, categoryEmoji }: C
           </span>
         </button>
       )}
- 
+
       {/* Drawer carrito */}
       <CartDrawer
         items={cartItems}
@@ -133,6 +145,7 @@ export default function CandyBarClient({ grouped, categories, categoryEmoji }: C
         }}
         onRemove={removeFromCart}
         onClear={clearCart}
+        onCheckout={handleCheckout}
       />
     </div>
   );
