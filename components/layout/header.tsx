@@ -1,6 +1,5 @@
 'use client';
 
-import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
 import { logout } from '@/app/(auth)/login/actions';
 import { usePathname } from 'next/navigation';
@@ -45,13 +44,15 @@ export default function Header({ user }: { user: any | null }) {
 
                 <div className="flex items-center gap-4">
                     {user ? (
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-6">
                             <span className="text-sm text-muted-foreground hidden sm:block">{user.email}</span>
+                            <Link href="/mis-reservas" className="text-sm font-medium text-neutral-300 transition-colors hover:text-purple-400">Mis Reservas</Link>
                             <form action={logout}>
                                 <button className="rounded-lg bg-neutral-800 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-700">
                                     Cerrar sesión
                                 </button>
-                            </form></div>
+                            </form>
+                        </div>
                     ) : (
                         <>
                             <Link href="/login" className="rounded-lg bg-neutral-800 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-700">Iniciar Sesión</Link>
