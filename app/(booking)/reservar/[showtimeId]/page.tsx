@@ -4,13 +4,14 @@ import ReservationClient from './reservation-client';
 import Link from 'next/link';
 
 interface ReservationPageProps {
-  params: {
+  params: Promise<{
     showtimeId: string;
-  };
+  }>;
 }
 
 export default async function ReservationPage({ params }: ReservationPageProps) {
-  const showtime = await getShowtimeById(params.showtimeId);
+  const { showtimeId } = await params;
+  const showtime = await getShowtimeById(showtimeId);
 
   if (!showtime) {
     notFound();
