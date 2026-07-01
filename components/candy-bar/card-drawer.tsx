@@ -1,7 +1,7 @@
 'use client';
- 
+
 import { CartItem } from '@/types/candy-bar';
- 
+
 interface CartDrawerProps {
   items: CartItem[];
   open: boolean;
@@ -9,12 +9,13 @@ interface CartDrawerProps {
   onAdd: (id: string) => void;
   onRemove: (id: string) => void;
   onClear: () => void;
+  onCheckout: () => void;
 }
- 
-export default function CartDrawer({ items, open, onClose, onAdd, onRemove, onClear }: CartDrawerProps) {
+
+export default function CartDrawer({ items, open, onClose, onAdd, onRemove, onClear, onCheckout }: CartDrawerProps) {
   const total = items.reduce((sum, i) => sum + i.product.price_cents * i.quantity, 0);
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
- 
+
   return (
     <>
       {/* Overlay */}
@@ -24,7 +25,7 @@ export default function CartDrawer({ items, open, onClose, onAdd, onRemove, onCl
           onClick={onClose}
         />
       )}
- 
+
       {/* Drawer */}
       <aside
         className={`fixed top-0 right-0 h-full w-full max-w-sm bg-gray-900 border-l border-gray-800 z-50 flex flex-col
@@ -43,7 +44,7 @@ export default function CartDrawer({ items, open, onClose, onAdd, onRemove, onCl
             ×
           </button>
         </div>
- 
+
         {/* Items */}
         <div className="flex-1 overflow-y-auto px-5 py-4 space-y-3">
           {items.length === 0 ? (
@@ -88,7 +89,7 @@ export default function CartDrawer({ items, open, onClose, onAdd, onRemove, onCl
             ))
           )}
         </div>
- 
+
         {/* Footer */}
         {items.length > 0 && (
           <div className="px-5 py-4 border-t border-gray-800 space-y-3">
@@ -96,7 +97,10 @@ export default function CartDrawer({ items, open, onClose, onAdd, onRemove, onCl
               <span className="text-gray-400 text-sm">Total</span>
               <span className="text-white font-bold text-xl">${(total / 100).toFixed(2)}</span>
             </div>
-            <button className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-3 rounded-xl transition-colors text-sm">
+            <button
+              onClick={onCheckout}
+              className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-3 rounded-xl transition-colors text-sm"
+            >
               Continuar con la reserva →
             </button>
             <button
