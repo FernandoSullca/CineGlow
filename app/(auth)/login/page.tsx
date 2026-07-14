@@ -60,7 +60,8 @@ export default async function LoginPage({
             <p><code className="font-mono bg-secondary px-1 rounded">demo@cineglow.com</code></p>
             <p><code className="font-mono bg-secondary px-1 rounded">password123</code></p>
           </div>
-          <button formAction={login} className="w-full h-11 inline-flex items-center justify-center rounded-md bg-primary text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">Iniciar Sesión</button>
+          <button formAction={login}
+            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-indigo-500 transition-colors">Iniciar Sesión</button>
         </form>
         <p className="mt-4 text-center text-sm text-muted-foreground">
           ¿No tenés cuenta? <Link href="/register" className="font-semibold text-primary hover:underline">Registrate</Link>
