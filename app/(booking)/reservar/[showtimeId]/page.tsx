@@ -3,14 +3,15 @@ import { notFound } from 'next/navigation';
 import ReservationClient from './reservation-client';
 
 interface ReservationPageProps {
-  params: { showtimeId: string };
+  params: Promise<{ showtimeId: string }>;
 }
 
 export default async function ReservationPage({ params }: ReservationPageProps) {
-  const { showtimeId } = params;
+  // En Next.js 15, 'params' es una promesa. La resolvemos con await.
+  const { showtimeId } = await params;
 
-  // Ahora no necesitamos try...catch. Si getShowtimeById falla,
-  // Next.js renderizará automáticamente el archivo app/error.tsx más cercano.
+  // Ahora no necesitamos try...catch. Si getShowtimeById falla, Next.js
+  // renderizará automáticamente el archivo app/error.tsx más cercano.
   const showtime = await getShowtimeById(showtimeId);
 
   if (!showtime) {
